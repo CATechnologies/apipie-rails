@@ -15,6 +15,11 @@
 
 <% @method[:apis].each do |api| %>
   <div class='page-header'>
+    <button class="show-try-it btn btn-primary pull-right">
+
+      Try it!
+    </button>
+    <%= render(:partial => "tryit", :locals => {:api => api, :params => @method[:params]}) %>
     <h1>
       <%= api[:http_method] %> <%= api[:api_url] %><br>
       <small><%= raw api[:short_description] %></small>

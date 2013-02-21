@@ -1,7 +1,32 @@
 body {
   padding-top: 20px;
   padding-bottom: 40px;
+  min-height: 1000px;
 }
 .sidebar-nav {
   padding: 9px 0;
+}
+
+.try-it {
+  position: absolute;
+  background-color: #fff;
+  box-shadow: -10px 4px 40px #ddd;
+  border: 2px solid #ddd;
+  padding: 10px;
+  width: 600px;
+  right: 365px;
+  display: none;
+}
+
+strong.method {
+  color: rgb(75,175,0);
+}
+
+strong.httpcode {
+  color: rgb(21, 163, 163);
+}
+
+strong.header {
+  color: rgb(4,4,4);
+  font-weight: normal;
 }

@@ -36,7 +36,9 @@ module Apipie
       %w[ bundled/jquery-1.7.2.js
           bundled/bootstrap-collapse.js
           bundled/prettify.js
-          apipie.js ].map do |file|
+          bundled/underscore-min.js
+          apipie.js
+          apipie-tryit.js].map do |file|
         "<script type='text/javascript' src='#{Apipie.full_url("javascripts/#{file}")}'></script>"
       end.join("\n").html_safe
     end

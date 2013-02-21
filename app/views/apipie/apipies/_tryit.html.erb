@@ -1,0 +1,56 @@
+<div class="try-it" data-http-method="<%= api[:http_method] %>" data-api-url="<%= api[:api_url] %>">
+<button class="hide-try-it pull-right btn btn-small">
+  Hide
+</button>
+
+<h2>Try it!</h2>
+
+<form>
+
+  <table class='table params'>
+    <thead>
+      <tr>
+        <th>Param name</th>
+        <th>Param value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%= render(:partial => "params_values", :locals => {:params => @method[:params]}) %>
+    </tbody>
+  </table>
+  <hr/>
+  <div>
+    <button class="run btn btn-primary pull-right">
+      <i class="icon-play icon-white"></i>
+      Run
+    </button>
+    <label>
+      Format:
+      <select name="format">
+        <%= @method[:formats].each do |format| %>
+          <option value="<%= format %>"><%= format %></option>
+        <% end %>
+      </select>
+    </label>
+  </div>
+
+</form>
+
+
+<img class="loading pull-right" src="/apipie/images/loading.gif">
+<h3>Request:</h3>
+<pre class="request">
+
+</pre>
+
+<h3>Response:</h3>
+<pre class="response">
+
+</pre>
+
+<h3>Output:</h3>
+<pre class="output pre-scrollable json">
+
+</pre>
+
+</div>
