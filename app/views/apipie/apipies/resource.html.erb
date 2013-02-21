@@ -60,7 +60,7 @@
       <% unless m[:errors].blank? %>
         <h3>Errors</h3>
         <% m[:errors].each do |err| %>
-          <%= err[:code] %>
+          <strong><%= err[:code] %></strong>
           <%= err[:description] %>
           <br>
         <% end %>
