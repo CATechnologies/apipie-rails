@@ -30,9 +30,7 @@
 
   <% @resource[:methods].each do |m| %>
     <hr>
-    <div class='pull-right small'>
-      <a href='<%= m[:doc_url] %>.html'> >>> </a>
-    </div>
+    <a class='pull-right btn small' href='<%= m[:doc_url] %>.html'> Details </a>
     <div>
       <% m[:apis].each do |api| %>
         <h2>
