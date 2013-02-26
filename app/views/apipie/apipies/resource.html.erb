@@ -38,7 +38,7 @@
            class='accordion-toggle'
            data-toggle='collapse'
            data-parent='#accordion'>
-            <%= api[:http_method] %> <%= api[:api_url] %>
+            <span class="<%= api[:http_method].downcase %>"><%= api[:http_method] %></span> <%= api[:api_url] %>
           </a><br>
           <small><%= raw api[:short_description] %></small>
         </h2>

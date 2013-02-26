@@ -30,3 +30,33 @@ strong.header {
   color: rgb(4,4,4);
   font-weight: normal;
 }
+
+
+pre.payload {
+  display: inline-block;
+  padding: 4px;
+  margin-bottom: 9px;
+  font-size: 13px;
+  line-height: 18px;
+  color: #555555;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  background-color: rgb(255, 254, 226);
+  width: 475px;
+  height: 275px;
+  overflow-y: scroll;
+}
+
+textarea.payload {
+  width: 475px;
+  height: 275px;
+  font-family: Courier;
+}
+
+/*
+.get { color: blue }
+.put { color: yellow }
+.post { color: green }
+.del { color: red }
+.patch { color: orange }
+*/

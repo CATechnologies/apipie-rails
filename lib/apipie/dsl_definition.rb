@@ -29,7 +29,8 @@ module Apipie
          :examples          => [],
          :see               => [],
          :formats           => nil,
-         :api_versions      => []
+         :api_versions      => [],
+         :payload           => nil
        }
       end
     end
@@ -96,6 +97,13 @@ module Apipie
       def example(example) #:doc:
         return unless Apipie.active_dsl?
         _apipie_dsl_data[:examples] << example.strip_heredoc
+      end
+
+      # Show some payload of what does the described
+      # method return.
+      def payload(payload) #:doc:
+        return unless Apipie.active_dsl?
+        _apipie_dsl_data[:payload] = payload.strip_heredoc
       end
 
       # Describe whole resource

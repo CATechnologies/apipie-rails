@@ -1,18 +1,32 @@
-<% level ||= 0 %>
-<% col = 255 - level * 5 %>
-<% params.each do |param| %>
+<% if @method[:payload].blank? %>
+
+  <% level ||= 0 %>
+  <% col = 255 - level * 5 %>
+  <% params.each do |param| %>
+    <tr style='background-color:rgb(<%= "#{col},#{col},#{col}" %>);'>
+      <td>
+        <strong><%= param[:full_name] %> </strong><br>
+        <small>
+          <%= param[:required] ? 'required' : 'optional' %>
+          <%= param[:allow_nil] ? ', nil allowed' : '' %>
+        </small>
+      </td>
+      <td>
+        <input type="text" name="<%= param[:full_name] %>" placeholder="<%= param[:full_name] %>"<%= param[:required] ? ' required' : '' %>>
+      </td>
+    </tr>
+
+    <%= render(:partial => "params_values", :locals => {:level => level + 1, :params => param[:params]}) unless param[:params].blank? %>
+  <% end %>
+
+<% else  %>
   <tr style='background-color:rgb(<%= "#{col},#{col},#{col}" %>);'>
     <td>
-      <strong><%= param[:full_name] %> </strong><br>
-      <small>
-        <%= param[:required] ? 'required' : 'optional' %>
-        <%= param[:allow_nil] ? ', nil allowed' : '' %>
-      </small>
+      <strong>Payload</strong><br>
     </td>
     <td>
-      <input type="text" name="<%= param[:full_name] %>" placeholder="<%= param[:full_name] %>">
+      <pre class="json payload"><%= @method[:payload] %></pre>
+      <textarea class="hidden json payload"><%= @method[:payload] %></textarea>
     </td>
   </tr>
-
-  <%= render(:partial => "params_values", :locals => {:level => level + 1, :params => param[:params]}) unless param[:params].blank? %>
 <% end %>

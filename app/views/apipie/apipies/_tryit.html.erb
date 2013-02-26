@@ -8,12 +8,14 @@
 <form>
 
   <table class='table params'>
+    <% unless @method[:payload].blank? %>
     <thead>
       <tr>
         <th>Param name</th>
         <th>Param value</th>
       </tr>
     </thead>
+    <% end %>
     <tbody>
       <%= render(:partial => "params_values", :locals => {:params => @method[:params]}) %>
     </tbody>

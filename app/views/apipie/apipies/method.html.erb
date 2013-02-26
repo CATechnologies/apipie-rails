@@ -21,7 +21,7 @@
     </button>
     <%= render(:partial => "tryit", :locals => {:api => api, :params => @method[:params]}) %>
     <h1>
-      <%= api[:http_method] %> <%= api[:api_url] %><br>
+      <span class="<%= api[:http_method].downcase %>"><%= api[:http_method] %></span> <%= api[:api_url] %><br>
       <small><%= raw api[:short_description] %></small>
     </h1>
   </div>
@@ -69,6 +69,12 @@
       </tbody>
     </table>
   <% end %>
+
+  <% unless @method[:payload].blank? %>
+    <h2>Payload</h2>
+    <pre class="json payload"><%= @method[:payload] %></pre>
+  <% end %>
+
 </div>
 
 <% content_for :apipie_footer do %>
