@@ -29,7 +29,7 @@
     <label>
       Format:
       <select name="format">
-        <%= @method[:formats].each do |format| %>
+        <% @method[:formats].each do |format| %>
           <option value="<%= format %>"><%= format %></option>
         <% end %>
       </select>
@@ -40,6 +40,7 @@
 
 
 <img class="loading pull-right" src="/apipie/images/loading.gif">
+<a class="pull-right curl" href="#"><i class="icon-share"></i> Export to Curl request</a>
 <h3>Request:</h3>
 <pre class="request">
 

@@ -47,6 +47,7 @@ $(document).ready(function () {
     $(".loading", $tryit).fadeIn();
     $(".response", $tryit).removeClass('error').html('Waiting...');
     $(".output", $tryit).html('\n');
+    $(".curl", $tryit).hide();
 
     $.ajax(request).done(function (data, text, xhr) {
       var response_headers = _.reduce(xhr.getAllResponseHeaders().split('\r\n'), function (memo, header){
@@ -62,6 +63,11 @@ $(document).ready(function () {
       prettyPrint();
       $(".loading", $tryit).fadeOut();
     }).fail(function(xhr) {
+      // For curl
+      last_request = _.extend(request, {
+        url: 'https://' + window.location.host + request.url
+      , data: params
+      });
       $(".response", $tryit).addClass('error').html(format_error({xhr: xhr}));
       $(".loading", $tryit).fadeOut();
     });
@@ -69,11 +75,19 @@ $(document).ready(function () {
 
   $(".show-try-it").click(function() {
     $tryit.fadeIn();
-    $(".loading", $tryit).hide();
+    $(".loading, .curl", $tryit).hide();
     $tryit.find(".params input:first").select().focus();
   });
 
   $(".hide-try-it").click(function() {
     $tryit.fadeOut();
   });
+
+  $(".curl").click(function (e) {
+    e.preventDefault();
+    if (last_request) {
+      prompt('Curl request:', curl(last_request));
+    }
+  });
+
 });
