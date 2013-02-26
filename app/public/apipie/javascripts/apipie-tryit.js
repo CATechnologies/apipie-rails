@@ -16,9 +16,17 @@ $(document).ready(function () {
   }
 
   var $tryit = $(".try-it")
-    , format_request = _.template("<strong class='method'><%= xhr.method %></strong> <%= xhr.url %><% _.each(headers, function(value, key) { %> <br><strong class='header'><%= key %></strong>: <%= value %><% }); %>")
+    , format_request = _.template("<strong class='method'><%= xhr.type.toUpperCase() %></strong> <%= xhr.url %><% _.each(headers, function(value, key) { %> <br><strong class='header'><%= key %></strong>: <%= value %><% }); %>")
     , format_response = _.template("<strong class='httpcode'><%= xhr.status %></strong> <%= xhr.statusText %><% _.each(headers, function(value, key) { %> <br><strong class='header'><%= key %></strong>: <%= value %><% }); %>")
-    , format_error = _.template("<strong class='httpcode'><%= xhr.status %></strong> <%= xhr.statusText %>");
+    , format_error = _.template("<strong class='httpcode'><%= xhr.status %></strong> <%= xhr.statusText %>")
+    , curl = _.template("curl -X <%= type.toUpperCase() %><% if (data) { %> --data \"<% _.each(data, function(item) { %><%= item.name %>=<%= item.value %>,<% }); %>\"<% } %> \"<%= url %>\"")
+    , last_request;
+
+  function filterOptionalParams(params) {
+    return _(params).filter(function (param) {
+      return $tryit.find('form').find('input[name="' + param.name + '"]').is('required') || param.value.length > 0;
+    });
+  }
 
   function addCollapsedButton($box) {
     var $button = $('<i class="icon-chevron-down"></i>');
@@ -36,7 +44,8 @@ $(document).ready(function () {
 
     var request
       , request_headers
-      , params;
+      , params
+      , payload;
 
     // Decorative headers
     request_headers = {
@@ -48,14 +57,23 @@ $(document).ready(function () {
     };
 
     params = $tryit.find('form').serializeArray();
+    params = filterOptionalParams(params);
+    payload = $tryit.find('form textarea.payload').val();
 
     request = {
-      method: $tryit.data('http-method')
+      type: $tryit.data('http-method').toLowerCase()
     , url: generateURL($tryit.data('api-url'), params)
-    , dataType: $tryit.find('input.format').val()
+    , dataType: $tryit.find('select[name="format"]').val()
     };
 
-    $(".request", $tryit).html(format_request({xhr:request, headers: request_headers}));
+    if (request.type === 'post' && request.dataType === 'json') {
+      request.contentType = 'application/json';
+      request.data = payload;
+    } else {
+      request.data = params;
+    }
+
+    $(".request", $tryit).html(format_request({xhr: request, headers: request_headers}));
     $(".loading", $tryit).fadeIn();
     $(".response", $tryit).removeClass('error').html('Waiting...');
     $(".output", $tryit).html('\n');
@@ -64,8 +82,8 @@ $(document).ready(function () {
     addCollapsedButton($(".request", $tryit));
 
     $.ajax(request).done(function (data, text, xhr) {
-      var response_headers = _.reduce(xhr.getAllResponseHeaders().split('\r\n'), function (memo, header){
-        var data = header.split(': ')
+      var response_headers = _.reduce(xhr.getAllResponseHeaders().split('\r\n'), function (memo, header) {
+        var data = header.split(': ');
         if (data && data.length === 2) {
           memo[data[0]] = data[1];
         }
@@ -73,10 +91,17 @@ $(document).ready(function () {
       }, {});
 
       $(".response", $tryit).html(format_response({xhr: xhr, headers: response_headers}));
-      $(".output", $tryit).text(xhr.responseText);
-      prettyPrint();
-      $(".loading", $tryit).fadeOut();
-    }).fail(function(xhr) {
+
+      if (request.dataType === 'json') {
+        $(".output", $tryit).text(JSON.stringify(data, '', 2));
+        prettyPrint();
+      } else {
+        $(".output", $tryit).text(xhr.responseText);
+      }
+
+      $(".loading", $tryit).fadeOut(function () {
+        $(".curl", $tryit).fadeIn();
+      });
 
       addCollapsedButton($(".response", $tryit));
 
@@ -85,6 +110,7 @@ $(document).ready(function () {
         url: 'https://' + window.location.host + request.url
       , data: params
       });
+    }).fail(function (xhr) {
       $(".response", $tryit).addClass('error').html(format_error({xhr: xhr}));
       $(".loading", $tryit).fadeOut();
     });
