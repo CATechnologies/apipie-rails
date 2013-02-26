@@ -8,7 +8,7 @@
 <form>
 
   <table class='table params'>
-    <% unless @method[:payload].blank? %>
+    <% if @method[:payload].blank? %>
     <thead>
       <tr>
         <th>Param name</th>
