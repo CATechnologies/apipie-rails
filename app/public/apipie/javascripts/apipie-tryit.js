@@ -5,7 +5,7 @@ $(document).ready(function () {
     var url = basic_url;
 
     // Filled params
-    _.each(params, function(param){
+    _.each(params, function (param) {
       url = url.replace(":" + param.name, param.value);
     });
 
@@ -73,13 +73,13 @@ $(document).ready(function () {
     });
   });
 
-  $(".show-try-it").click(function() {
+  $(".show-try-it").click(function () {
     $tryit.fadeIn();
     $(".loading, .curl", $tryit).hide();
     $tryit.find(".params input:first").select().focus();
   });
 
-  $(".hide-try-it").click(function() {
+  $(".hide-try-it").click(function () {
     $tryit.fadeOut();
   });
 
