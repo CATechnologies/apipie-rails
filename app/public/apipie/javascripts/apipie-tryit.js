@@ -116,6 +116,10 @@ $(document).ready(function () {
     });
   });
 
+  $("pre.payload", $tryit).click(function (evt) {
+    $(this).hide().siblings('textarea').removeClass('hidden').trigger(e).focus();
+  });
+
   $(".show-try-it").click(function () {
     $tryit.fadeIn();
     $(".loading, .curl", $tryit).hide();
@@ -124,10 +128,6 @@ $(document).ready(function () {
 
   $(".hide-try-it").click(function () {
     $tryit.fadeOut();
-  });
-
-  $("pre.payload").click(function () {
-    $(this).hide().siblings('textarea').removeClass('hidden').focus();
   });
 
   $(".curl").click(function (e) {
