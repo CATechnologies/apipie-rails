@@ -51,13 +51,13 @@ pre.payload {
   border: 1px solid #cccccc;
   border-radius: 3px;
   background-color: rgb(255, 254, 226);
-  width: 475px;
+  width: 500px;
   height: 275px;
   overflow-y: scroll;
 }
 
 textarea.payload {
-  width: 475px;
+  width: 500px;
   height: 275px;
   font-family: Courier;
 }
