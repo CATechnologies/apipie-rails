@@ -83,6 +83,10 @@ $(document).ready(function () {
     $tryit.fadeOut();
   });
 
+  $("pre.payload").click(function () {
+    $(this).hide().siblings('textarea').removeClass('hidden').focus();
+  });
+
   $(".curl").click(function (e) {
     e.preventDefault();
     if (last_request) {
