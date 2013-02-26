@@ -38,12 +38,13 @@ $(document).ready(function () {
       , request_headers
       , params;
 
+    // Decorative headers
     request_headers = {
       'Host': window.location.host
-    , 'Accept':'*/*' // TODO
-    , 'Accept-Charset':'ISO-8859-1,utf-8;q=0.7,*;q=0.3'
-    , 'Accept-Encoding':'gzip,deflate,sdch'
-    , 'Accept-Language':'en,es;q=0.8,en-GB;q=0.6,ca;q=0.4'
+    , 'Accept': '*/*' // TODO
+    , 'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3'
+    , 'Accept-Encoding': 'gzip,deflate,sdch'
+    , 'Accept-Language': 'en,es;q=0.8,en-GB;q=0.6,ca;q=0.4'
     };
 
     params = $tryit.find('form').serializeArray();
