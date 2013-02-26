@@ -20,6 +20,17 @@ $(document).ready(function () {
     , format_response = _.template("<strong class='httpcode'><%= xhr.status %></strong> <%= xhr.statusText %><% _.each(headers, function(value, key) { %> <br><strong class='header'><%= key %></strong>: <%= value %><% }); %>")
     , format_error = _.template("<strong class='httpcode'><%= xhr.status %></strong> <%= xhr.statusText %>");
 
+  function addCollapsedButton($box) {
+    var $button = $('<i class="icon-chevron-down"></i>');
+
+    $button.click(function () {
+      $(this).parent(".toggle-collapsed").toggleClass('collapsed');
+      $(this).toggleClass('icon-chevron-up').toggleClass('icon-chevron-down');
+    });
+
+    $box.addClass('toggle-collapsed collapsed').prepend($button);
+  }
+
   $('button.run', $tryit).click(function (e) {
     e.preventDefault();
 
@@ -49,6 +60,8 @@ $(document).ready(function () {
     $(".output", $tryit).html('\n');
     $(".curl", $tryit).hide();
 
+    addCollapsedButton($(".request", $tryit));
+
     $.ajax(request).done(function (data, text, xhr) {
       var response_headers = _.reduce(xhr.getAllResponseHeaders().split('\r\n'), function (memo, header){
         var data = header.split(': ')
@@ -63,6 +76,9 @@ $(document).ready(function () {
       prettyPrint();
       $(".loading", $tryit).fadeOut();
     }).fail(function(xhr) {
+
+      addCollapsedButton($(".response", $tryit));
+
       // For curl
       last_request = _.extend(request, {
         url: 'https://' + window.location.host + request.url

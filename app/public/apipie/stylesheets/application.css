@@ -31,6 +31,15 @@ strong.header {
   font-weight: normal;
 }
 
+pre.request.collapsed, pre.response.collapsed {
+  max-height: 16px;
+  overflow: hidden;
+}
+
+pre .icon-chevron-up, pre .icon-chevron-down {
+  float: right;
+  cursor: pointer;
+}
 
 pre.payload {
   display: inline-block;
