@@ -53,7 +53,7 @@ pre.payload {
   background-color: rgb(255, 254, 226);
   width: 500px;
   height: 275px;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 textarea.payload {
