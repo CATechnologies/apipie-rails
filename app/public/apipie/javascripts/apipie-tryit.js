@@ -66,7 +66,7 @@ $(document).ready(function () {
     , dataType: $tryit.find('select[name="format"]').val()
     };
 
-    if (request.type === 'post' && request.dataType === 'json') {
+    if ((request.type === 'post' || request.type === 'put') && request.dataType === 'json') {
       request.contentType = 'application/json';
       request.data = payload;
     } else {
@@ -116,8 +116,8 @@ $(document).ready(function () {
     });
   });
 
-  $("pre.payload", $tryit).click(function (evt) {
-    $(this).hide().siblings('textarea').removeClass('hidden').trigger(e).focus();
+  $("pre.payload", $tryit).click(function () {
+    $(this).hide().siblings('textarea').removeClass('hidden').focus();
   });
 
   $(".show-try-it").click(function () {
